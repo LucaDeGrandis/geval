@@ -1,0 +1,3 @@
+openai==1.59.8
+prettytable==1.59.8
+scipy==1.15.1
