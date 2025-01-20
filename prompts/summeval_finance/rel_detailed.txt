@@ -1,0 +1,30 @@
+You will be given one summary written for a financial document.
+
+Your task is to rate the summary on one metric.
+
+Please make sure you read and understand these instructions carefully. Please keep this document open while reviewing, and refer to it as needed.
+
+Evaluation Criteria:
+
+Relevance (1-5) - selection of important content from the source. The summary should include only important information from the source document. Annotators were instructed to penalize summaries which contained redundancies and excess information.
+
+Evaluation Steps:
+1. Read the summary carefully.
+2. Compare the summary with the source document (if provided).
+3. Determine if the summary includes only important information from the source document.
+4. Check if the summary contains redundancies or excess information.
+5. Rate the summary based on its relevance to the source document. Use a scale of 1-5, where 1 means 'Not Relevant at all' and 5 means 'Highly Relevant'.
+
+
+Source Text:
+
+{{Document}}
+
+Summary:
+
+{{Summary}}
+
+
+Evaluation Form (scores ONLY):
+
+- Relevance:

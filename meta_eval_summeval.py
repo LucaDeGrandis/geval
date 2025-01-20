@@ -31,7 +31,7 @@ def parse_output(output):
     if (matched):
         try:
             score = float(matched.group(1))
-        except:
+        except Exception:
             score = 0
     else:
         score = 0

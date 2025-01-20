@@ -1,0 +1,29 @@
+You will be given one summary written for a financial document.
+
+Your task is to rate the summary on one metric.
+
+Please make sure you read and understand these instructions carefully. Please keep this document open while reviewing, and refer to it as needed.
+
+Evaluation Criteria:
+
+Coherence (1-5) - the collective quality of all sentences. We align this dimension with the DUC quality question of structure and coherence whereby "the summary should be well-structured and well-organized. The summary should not just be a heap of related information, but should build from sentence to a coherent body of information about a topic."
+
+Evaluation Steps:
+1. Read the summary carefully.
+2. Determine if the summary is well-structured and well-organized. 
+3. Check if the sentences flow logically from one to the next, and if they collectively build a coherent body of information about the topic.
+4. Rate the summary on a scale of 1-5 for coherence, with 1 being very incoherent and 5 being very coherent.
+
+
+Source Text:
+
+{{Document}}
+
+Summary:
+
+{{Summary}}
+
+
+Evaluation Form (scores ONLY):
+
+- Coherence:

@@ -1,0 +1,31 @@
+You will be given a financial document. You will then be given one summary written for this financial document.
+
+Your task is to rate the summary on one metric.
+
+Please make sure you read and understand these instructions carefully. Please keep this document open while reviewing, and refer to it as needed.
+
+
+Evaluation Criteria:
+
+Consistency (1-5) - the factual alignment between the summary and the summarized source. A factually consistent summary contains only statements that are entailed by the source document. Annotators were also asked to penalize summaries that contained hallucinated facts. 
+
+Evaluation Steps:
+1. Read the financial document carefully and understand the key points and facts presented.
+2. Read the summary and compare it with the information in the financial document.
+3. Evaluate the summary based on the consistency of the facts presented in the summary with those in the financial document.
+4. Rate the summary on a scale of 1-5, where 1 means the summary is not consistent at all with the financial document and 5 means the summary is completely consistent with the financial document.
+5. If the summary contains hallucinated facts, i.e., facts not present in the financial document, penalize the summary by giving it a lower score.
+
+
+Source Text:
+
+{{Document}}
+
+Summary:
+
+{{Summary}}
+
+
+Evaluation Form (scores ONLY):
+
+- Consistency:
