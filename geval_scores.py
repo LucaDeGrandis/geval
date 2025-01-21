@@ -116,7 +116,7 @@ if __name__ == "__main__":
     if args.relevance_path is not None:
         outputs["relevance"] = load_json_file(args.relevance_path)
 
-    methods = set([x['system_id'] for x in outputs["coherence"]])
+    methods = sorted(list(set([x['system_id'] for x in outputs["coherence"]])))
 
     all_scores = defaultdict(dict)
     scores = defaultdict(dict)
@@ -136,7 +136,7 @@ if __name__ == "__main__":
     for method in methods:
         print("\n------------------------\nMethod : {:<15}\n".format(method))
         print(f"Invalid scores: {invalid_scores[method]}\n")
-        print("{:<15} | {:<6}, {:<6}".format("metric", "value", "sd"))
+        print("{:<15} | {:<6} ({:<6})".format("metric", "value", "sd"))
         print("---------------------------------")
         for key, item in scores[method].items():
-            print("{:<15} | {:<6}, {:<6}".format(key, round(item[0], 2), round(item[1], 2)))
+            print("{:<15} | {:<6} ({:<6})".format(key, round(item[0], 2), round(item[1], 2)))
