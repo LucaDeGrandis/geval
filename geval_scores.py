@@ -3,6 +3,7 @@ import re
 from typing import List, Dict, Any
 import json
 import numpy as np
+from collections import defaultdict
 
 
 def parse_arguments():
@@ -115,17 +116,27 @@ if __name__ == "__main__":
     if args.relevance_path is not None:
         outputs["relevance"] = load_json_file(args.relevance_path)
 
-    all_scores = {}
-    scores = {}
+    methods = set([x['system_id'] for x in outputs["coherence"]])
 
-    for key, item in outputs.items():
-        all_scores[key] = parse_geval_outputs(item)
-        if not all_scores[key]:
-            scores[key] = [.0, None]
-        else:
-            scores[key] = (sum(all_scores[key]) / len(all_scores[key]), np.std(all_scores[key]))
+    all_scores = defaultdict(dict)
+    scores = defaultdict(dict)
+    invalid_scores = defaultdict(lambda: 0)
 
-    print("{:<15} | {:<6}, {:<6}".format("metric", "value", "score"))
-    print("---------------------------------")
-    for key, item in scores.items():
-        print("{:<15} | {:<6}, {:<6}".format(key, round(item[0], 2), round(item[1], 2)))
+    for method in methods:
+        for key, item in outputs.items():
+            targets = list(filter(lambda x: x['system_id'] == method, item))
+            all_scores[method][key] = parse_geval_outputs(targets)
+            invalid_scores[method] += len(list(filter(lambda x: x < 0 or x > 5, all_scores[method][key])))
+            all_scores[method][key] = list(filter(lambda x: x >= 0 and x <= 5, all_scores[method][key]))
+            if not all_scores[method][key]:
+                scores[method][key] = (.0, .0)
+            else:
+                scores[method][key] = (sum(all_scores[method][key]) / len(all_scores[method][key]), np.std(all_scores[method][key]))
+
+    for method in methods:
+        print("\n------------------------\nMethod : {:<15}\n".format(method))
+        print(f"Invalid scores: {invalid_scores[method]}\n")
+        print("{:<15} | {:<6}, {:<6}".format("metric", "value", "sd"))
+        print("---------------------------------")
+        for key, item in scores[method].items():
+            print("{:<15} | {:<6}, {:<6}".format(key, round(item[0], 2), round(item[1], 2)))
