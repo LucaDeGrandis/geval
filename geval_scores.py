@@ -83,6 +83,25 @@ def parse_geval_outputs(
     return scores
 
 
+def parse_summary_level_geval_outputs(
+    output: List[Dict[str, Any]],
+) -> List[float]:
+    """
+    Parses all the G-Eval outputs to extract numerical scores.
+    """
+    scores = []
+    for line in output:
+        summary_scores = []
+        for res in line['all_responses']:
+            summary_scores.append(parse_output(res))
+        if not summary_scores:
+            scores.append(0.0)
+        else:
+            scores.append(sum(summary_scores) / len(summary_scores))
+
+    return scores
+
+
 def load_jsonl_file(
     filepath: str
 ) -> List[Dict[str, Any]]:
@@ -151,6 +170,7 @@ if __name__ == "__main__":
         for key, item in outputs.items():
             targets = list(filter(lambda x: x['system_id'] == method, item))
             all_scores[method][key] = parse_geval_outputs(targets)
+            all_scores[method][f"{key}--summary"] = parse_summary_level_geval_outputs(targets)
             invalid_scores[method] += len(list(filter(lambda x: x < 0 or x > 5, all_scores[method][key])))
             all_scores[method][key] = list(filter(lambda x: x >= 0 and x <= 5, all_scores[method][key]))
             if not all_scores[method][key]:
