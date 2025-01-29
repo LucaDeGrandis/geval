@@ -32,6 +32,12 @@ def parse_arguments():
         required=False,
         default=None,
     )
+    parser.add_argument(
+        '--out_file',
+        type=str,
+        required=False,
+        default=None,
+    )
 
     args = parser.parse_args()
 
@@ -103,6 +109,24 @@ def load_json_file(
     return json_data
 
 
+def write_json_file(
+    filepath: str,
+    input_dict: Dict[str, Any],
+    overwrite: bool = False
+) -> None:
+    """Write a dictionary into a json
+    *arguments*
+    *filepath* path to save the file into
+    *input_dict* dictionary to be saved in the json file
+    *overwrite* whether to force overwriting a file.
+        Default is false so you don't delete an existing file.
+    """
+    if not overwrite:
+        assert not os.path.exists(filepath)
+    with open(filepath, 'w', encoding='utf8') as writer:
+        json.dump(input_dict, writer, indent=4, ensure_ascii=False)
+
+
 if __name__ == "__main__":
     args = parse_arguments()
 
@@ -140,3 +164,13 @@ if __name__ == "__main__":
         print("---------------------------------")
         for key, item in scores[method].items():
             print("{:<15} | {:<6} ({:<6})".format(key, round(item[0], 2), round(item[1], 2)))
+
+    if args.out_file is not None:
+        write_json_file(
+            args.out_file,
+            {
+                "dataset": scores,
+                "summary": all_scores
+            },
+            overwrite=True
+        )
